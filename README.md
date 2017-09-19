@@ -1,0 +1,2 @@
+My project is implementation of File I/O Library functions using basic functions like open, read, write, close, lseek. 
+List of functions I am implementing is: fopen, fclose, fread, fwrite, fgetpos, fsetpos, feof, ftell, fseek
