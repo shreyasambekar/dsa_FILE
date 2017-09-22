@@ -1,14 +1,17 @@
-#include <FILE.h> 
+#include <stdlib.h>
+#include "FILE.h"
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
-FILE2 *fopen(const char *filename, const char *mode) {
+FILE2 *fopen2(const char *filename, const char *mode) {
 	FILE2 *fp;
 	int fd;
-	printf("%d" , i);
-/*	if(strcmp(mode, "r") == 0) {
+	if(i == 10) {
+		return NULL;
+	}
+	if(strcmp(mode, "r") == 0) {
 		fd = open(filename, O_RDONLY);
 		fp->flag = RBUF;
 		if(fd == -1) {
@@ -16,8 +19,8 @@ FILE2 *fopen(const char *filename, const char *mode) {
 		}
 	}
 	else if(strcmp(mode, "w") == 0) {
-		fd = open(filename, O_WRDONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
-		fp->flag = WBUF;
+		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+		fp->flag = WRBUF;
 		if(fd == -1) {
 			return NULL;
 		}
@@ -38,8 +41,8 @@ FILE2 *fopen(const char *filename, const char *mode) {
 		}
 	}
 	else if(strcmp(mode, "w+") == 0) {
-		fd = open(filename, O_RDONLY | O_WRDONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
-		fp->flag = WRRRBUF;
+		fd = open(filename, O_RDONLY | O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+		fp->flag = WRRBUF;
 		if(fd == -1) {
 			return NULL;
 		}
@@ -55,5 +58,10 @@ FILE2 *fopen(const char *filename, const char *mode) {
 	else {
 		return NULL;
 	}
-*/
+	fp->fd = fd;
+	fp->cnt = 0;	
+	fp->base = (char *) malloc(1024);
+	fp->ptr = fp->base;
+	i++;					//Increases the counter that keeps record of no. of opened files
+	return fp;
 }

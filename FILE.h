@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #define BUFSIZE 1024
 #define MAX 10
 typedef struct file {
@@ -12,7 +11,7 @@ typedef struct file {
 /*Some more flags to add for appending, combined reading and buffered etc. options*/
 enum flags {	
 	RBUF = 1,		//File open for reading and is buffered, the file must exist
-	WBUF = 2, 		//File open for writing and is buffered, empty file is created
+	WRBUF = 2, 		//File open for writing and is buffered, empty file is created
 	APPBUF = 3,  		//File open for appending and is buffered, created if not exist
 	RWRBUF = 4,		//File open for reading and writing and is buffered, the file must exist	
 	WRRBUF = 5,		//File open for reading and writing and is buffered, empty file is created
@@ -20,5 +19,4 @@ enum flags {
 	ERR = 7,		//Error has occured on file
 };
 
-FILE2 *arr[MAX];
-int i = 0;
+int i = 0;			//Variable that stores no. of simultaneously opened files
