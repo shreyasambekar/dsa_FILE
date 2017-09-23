@@ -20,3 +20,6 @@ enum flags {
 };
 
 int i = 0;			//Variable that stores no. of simultaneously opened files
+int fclose2(FILE2 *);
+FILE2 *fopen2(const char *filename, const char *mode);
+

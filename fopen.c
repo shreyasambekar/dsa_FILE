@@ -8,7 +8,7 @@
 FILE2 *fopen2(const char *filename, const char *mode) {
 	FILE2 *fp;
 	int fd;
-	if(i == 10) {
+	if(i == 10) {						//Maximum possible no. of files are opened in the program
 		return NULL;
 	}
 	if(strcmp(mode, "r") == 0) {
