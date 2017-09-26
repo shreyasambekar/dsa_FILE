@@ -17,7 +17,7 @@ enum flags {
 	WRRBUF,			//File open for reading and writing and is buffered, empty file is created
 	RAPPBUF,		//File open for reading and appending and is buffered, created if not exist
 	ERR, 			//Error has occured on file
-	EOF2 = 8;		//End of file has reached on file
+	EOF2 = 8		//End of file has reached on file
 };
 
 int i = 0;			//Variable that stores no. of simultaneously opened files

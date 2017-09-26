@@ -15,19 +15,19 @@ int fread(void *ptr, int size, int nmemb, FILE2 *fp) {
 	char *cp = (char *) ptr;
 	while(1) {
 		if(fp->cnt == 0) {
-			rddata = read(fp->fd, fp->rbuf, BUFSIZE)
+			rddata = read(fp->fd, fp->rbuf, BUFSIZE);
 			fp->rptr = fp->rbuf;
 			if(rddata < BUFSIZE) {
 				fp->flag = EOF2;
 			}
 		}
 		else {
-			rddata = fp->base + rddata - fp->ptr;
+			rddata = fp->rbuf + rddata - fp->rptr;
 			fp->cnt = 0;
 		}
 		if(rddata >= bytes) {
-			for(i = 0; i < bytes, i++) {
-				*(cp++) = *(fp->ptr++);
+			for(i = 0; i < bytes; i++) {
+				*(cp++) = *(fp->rptr++);
 				count++;
 			}
 			fp->cnt = rddata - bytes;
@@ -35,7 +35,7 @@ int fread(void *ptr, int size, int nmemb, FILE2 *fp) {
 		}
 		bytes = bytes - BUFSIZE;
 		for(i = 0; i < rddata; i++) {
-			*(cp++) = *(fp->ptr++)
+			*(cp++) = *(fp->rptr++);
 			count++;
 		}
 		if(fp->flag == EOF2) {
