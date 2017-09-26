@@ -5,10 +5,15 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
+
+/*The  function FILE2 *fopen(const char *filename, const char *mode) opens the filename pointed to, by filename using the given mode.
+ * This function returns a FILE pointer.
+ *  Otherwise, NULL is returned and the global variable errno is set to indicate the error.*/
+ 
 FILE2 *fopen2(const char *filename, const char *mode) {
 	FILE2 *fp;
 	int fd;
-	if(i == 10) {						//Maximum possible no. of files are opened in the program
+	if(i == MAX) {						//Maximum possible no. of files are opened in the program
 		return NULL;
 	}
 	if(strcmp(mode, "r") == 0) {
@@ -60,8 +65,9 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 	}
 	fp->fd = fd;
 	fp->cnt = 0;	
-	fp->base = (char *) malloc(1024);
-	fp->ptr = fp->base;
+	fp->rbuf = (char *) malloc(BUFSIZE);
+	fp->wbuf = (char *) malloc(BUFSIZE);	
+	fp->rptr = fp->rbuf;
 	i++;					//Increases the counter that keeps record of no. of opened files
 	return fp;
 }
