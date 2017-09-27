@@ -1,8 +1,10 @@
 #define BUFSIZE 1024
 #define MAX 10
 typedef struct file {
-	int cnt;		//Characters left
+	int rcnt;		//Characters left to read from buffer
+	int wcnt;		//Chracters to be written to file
 	char *rptr;		//Next character position for read buffer
+	char *wptr;		//Next character position for write buffer
 	char *rbuf;		//Location of buffer for reading
 	char *wbuf;		//Location of buffer for writing
 	int flag;		//Mode of file access
@@ -23,4 +25,5 @@ enum flags {
 int i = 0;			//Variable that stores no. of simultaneously opened files
 int fclose2(FILE2 *);
 FILE2 *fopen2(const char *filename, const char *mode);
-int fread(void *ptr, int size, int nmemb, FILE2 *stream);	//Using int instead of size_t just for simplicity
+int fread2(void *ptr, int size, int nmemb, FILE2 *stream);	//Using int instead of size_t just for simplicity
+int fwrite2(const void *ptr, int size, int nmemb, FILE2 *stream);
