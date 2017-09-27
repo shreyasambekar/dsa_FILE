@@ -64,10 +64,12 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		return NULL;
 	}
 	fp->fd = fd;
-	fp->cnt = 0;	
+	fp->rcnt = 0;	
+	fp->wcnt = 0;
 	fp->rbuf = (char *) malloc(BUFSIZE);
 	fp->wbuf = (char *) malloc(BUFSIZE);	
 	fp->rptr = fp->rbuf;
+	fp->wptr = fp->wbuf;
 	i++;					//Increases the counter that keeps record of no. of opened files
 	return fp;
 }
