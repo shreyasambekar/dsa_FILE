@@ -11,32 +11,28 @@
 
 int fread2(void *ptr, int size, int nmemb, FILE2 *fp) {
 	long int bytes = size * nmemb, j, count = 0;
-	static int rddata;
 	char *cp = (char *) ptr;
 	while(1) {
 		if(fp->rcnt == 0) {
-			rddata = read(fp->fd, fp->rbuf, BUFSIZE);
+			fp->rcnt = read(fp->fd, fp->rbuf, BUFSIZE);
 			fp->rptr = fp->rbuf;
-			if(rddata < BUFSIZE) {
+			if(fp->rcnt < BUFSIZE) {
 				fp->flag = EOF2;
 			}
 		}
-		else {
-			rddata = fp->rbuf + rddata - fp->rptr;
-			fp->rcnt = 0;
-		}
-		if(rddata >= bytes) {
+		if(fp->rcnt >= bytes) {
 			for(j = 0; j < bytes; j++) {
 				*(cp++) = *(fp->rptr++);
 				count++;
+				fp->rcnt--;
 			}
-			fp->rcnt = rddata - bytes;
 			break;
 		}
-		bytes = bytes - rddata;
-		for(j = 0; j < rddata; j++) {
+		bytes = bytes - fp->rcnt;
+		for(j = 0; j < fp->rcnt; j++) {
 			*(cp++) = *(fp->rptr++);
 			count++;
+			fp->rcnt--;
 		}
 		if(fp->flag == EOF2) {
 			break;
