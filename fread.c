@@ -12,6 +12,10 @@
 int fread2(void *ptr, int size, int nmemb, FILE2 *fp) {
 	long int bytes = size * nmemb, j, count = 0;
 	char *cp = (char *) ptr;
+	if(fp->fd > 13) {
+		write(1, "Not a standard file descriptor, read operation failed\n", 54);
+		return 0;
+	}
 	while(1) {
 		if(fp->rcnt == 0) {
 			fp->rcnt = read(fp->fd, fp->rbuf, BUFSIZE);
@@ -21,7 +25,7 @@ int fread2(void *ptr, int size, int nmemb, FILE2 *fp) {
 			}
 		}
 		if(fp->rcnt >= bytes) {
-			for(j = 0; j < bytes; j++) {
+			for(j = 0; j < bytes; j++) {		//Addition of 1 may be necessary to loop conditions
 				*(cp++) = *(fp->rptr++);
 				count++;
 				fp->rcnt--;
@@ -31,12 +35,13 @@ int fread2(void *ptr, int size, int nmemb, FILE2 *fp) {
 		bytes = bytes - fp->rcnt;
 		for(j = 0; j < fp->rcnt; j++) {
 			*(cp++) = *(fp->rptr++);
-			count++;
+			count++;			//Not sure with precedence, check it later
 			fp->rcnt--;
 		}
 		if(fp->flag == EOF2) {
 			break;
 		}
 	}
-	return count/size;
+	fp->pos = fp->pos + count;
+	return (count/size);
 }

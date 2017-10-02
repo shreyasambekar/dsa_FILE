@@ -13,12 +13,14 @@
 FILE2 *fopen2(const char *filename, const char *mode) {
 	FILE2 *fp;
 	int fd;
+	struct stat st;
 	if(i == MAX) {						//Maximum possible no. of files are opened in the program
 		return NULL;
 	}
 	if(strcmp(mode, "r") == 0) {
 		fd = open(filename, O_RDONLY);
 		fp->flag = RBUF;
+		fp->pos = 0;
 		if(fd == -1) {
 			return NULL;
 		}
@@ -26,6 +28,7 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 	else if(strcmp(mode, "w") == 0) {
 		fd = open(filename, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 		fp->flag = WRBUF;
+		fp->pos = 0;
 		if(fd == -1) {
 			return NULL;
 		}
@@ -36,11 +39,14 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		if(fd == -1) {
 			return NULL;
 		}
-   		lseek(fd, 0, SEEK_END);		//Set the file position to the end
+   		stat(filename, &st);
+		fp->pos = st.st_size;		//Addition by 1 may be necessary
+		lseek(fd, 0, SEEK_END);		//Set the file position to the end
 	}
 	else if(strcmp(mode, "r+") == 0) {
 		fd = open(filename, O_RDONLY | O_WRONLY);
 		fp->flag = RWRBUF;
+		fp->pos = 0;
 		if(fd == -1) {
 			return NULL;
 		}
@@ -48,6 +54,7 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 	else if(strcmp(mode, "w+") == 0) {
 		fd = open(filename, O_RDONLY | O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 		fp->flag = WRRBUF;
+		fp->pos = 0;
 		if(fd == -1) {
 			return NULL;
 		}
@@ -58,6 +65,8 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		if(fd == -1) {
 			return NULL;
 		}
+   		stat(filename, &st);
+		fp->pos = st.st_size;		//Addition by 1 may be necessary
    		lseek(fd, 0, SEEK_END);		//Set the file position to the end
 	}
 	else {

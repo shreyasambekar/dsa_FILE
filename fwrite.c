@@ -13,8 +13,12 @@ int fwrite2(const void *ptr, int size, int nmemb, FILE2 *fp) {
 	long int bytes, j, count = 0, written;
 	bytes = size * nmemb;
 	char *cp = (char *) ptr;
+	if(fp->fd > 13) {
+		write(1, "Not a standard file descriptor, write operation failed\n", 55);
+		return 0;
+	}
 	while(1) {
-		for(j = 0; j < bytes; j++) {
+		for(j = 0; j < bytes; j++) {				//Addition of 1 may be necessary to loop conditions
 			*(fp->wptr++) = *(cp++);
 			fp->wcnt++;
 			if(fp->wcnt == BUFSIZE) {
@@ -22,7 +26,8 @@ int fwrite2(const void *ptr, int size, int nmemb, FILE2 *fp) {
 				if(written != BUFSIZE) {
 					fp->wcnt = fp->wcnt - written;
 					count = count + written;	
-					return count / size;
+					fp->pos = fp->pos + count;		//Add 1 if necessary later
+					return (count / size);
 				}
 				fp->wcnt = 0;	
 				break;
@@ -42,5 +47,6 @@ int fwrite2(const void *ptr, int size, int nmemb, FILE2 *fp) {
 			break;
 		}
 	}	
-	return count / size;
+	fp->pos = fp->pos + count;	
+	return (count / size);
 }
