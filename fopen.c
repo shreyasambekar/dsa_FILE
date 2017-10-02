@@ -13,7 +13,7 @@
 FILE2 *fopen2(const char *filename, const char *mode) {
 	FILE2 *fp;
 	int fd;
-	struct stat st;
+	struct stat st;						//Structure to get the length of file
 	if(i == MAX) {						//Maximum possible no. of files are opened in the program
 		return NULL;
 	}

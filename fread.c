@@ -12,7 +12,7 @@
 int fread2(void *ptr, int size, int nmemb, FILE2 *fp) {
 	long int bytes = size * nmemb, j, count = 0;
 	char *cp = (char *) ptr;
-	if(fp->fd > 13) {
+	if(fp->fd > 13 || fp->fd < 0) {
 		write(1, "Not a standard file descriptor, read operation failed\n", 54);
 		return 0;
 	}

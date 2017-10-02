@@ -13,7 +13,7 @@ int fwrite2(const void *ptr, int size, int nmemb, FILE2 *fp) {
 	long int bytes, j, count = 0, written;
 	bytes = size * nmemb;
 	char *cp = (char *) ptr;
-	if(fp->fd > 13) {
+	if(fp->fd > 13 || fp->fd < 0) {
 		write(1, "Not a standard file descriptor, write operation failed\n", 55);
 		return 0;
 	}

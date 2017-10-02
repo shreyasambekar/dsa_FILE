@@ -12,6 +12,10 @@
 
 int fclose2(FILE2 * fp) {
 	int ret;
+	if(fp->fd > 13 || fp->fd < 0) {
+		write(1, "Not a standard file descriptor\n", 31);
+		return -1;
+	}
 	if(fp->wcnt != 0) {
 		write(fp->fd, fp->wbuf, fp->wcnt);	//Flushes the buffer
 	}
@@ -19,6 +23,7 @@ int fclose2(FILE2 * fp) {
 	free(fp->rbuf);			//Frees the memory allocated for read buffer
 	fp->rcnt = 0;
 	fp->flag = 0;
+	fp->pos = 0;
 	ret = close(fp->fd);
 	if(ret == -1) {
 		return -1;
