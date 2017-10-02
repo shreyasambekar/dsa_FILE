@@ -6,7 +6,7 @@
 
 /* The function int fwrite(const void *ptr, int size, int nmemb, FILE2 *stream) writes data from the array pointed to, by ptr to the given
  * stream.
- * This function writtenurns the total number of elements successfully writtenurned as a int. 
+ * This function returns the total number of elements successfully written as a int. 
  * If this number differs from the nmemb parameter, it will show an error.*/
 
 int fwrite2(const void *ptr, int size, int nmemb, FILE2 *fp) {
