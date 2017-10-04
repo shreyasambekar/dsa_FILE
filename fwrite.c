@@ -1,4 +1,6 @@
 #include "FILE.h"
+#include <stdlib.h>
+#include <stddef.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -9,7 +11,7 @@
  * This function returns the total number of elements successfully written as a int. 
  * If this number differs from the nmemb parameter, it will show an error.*/
 
-int fwrite2(const void *ptr, int size, int nmemb, FILE2 *fp) {
+int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 	long int bytes, j, count = 0, written;
 	bytes = size * nmemb;
 	char *cp = (char *) ptr;

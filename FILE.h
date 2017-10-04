@@ -1,5 +1,8 @@
+#include <stdlib.h>
+#include <stddef.h>
 #define BUFSIZE 1024
 #define MAX 10
+
 typedef struct file {
 	int rcnt;		//Characters left to read from buffer
 	int wcnt;		//Chracters to be written to file from buffer
@@ -26,6 +29,6 @@ enum flags {
 int i = 0;			//Variable that stores no. of simultaneously opened files
 int fclose2(FILE2 *);
 FILE2 *fopen2(const char *filename, const char *mode);
-int fread2(void *ptr, int size, int nmemb, FILE2 *stream);	//Using int instead of size_t just for simplicity
-int fwrite2(const void *ptr, int size, int nmemb, FILE2 *stream);
+int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *stream);	
+int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *stream);
 long int ftell(FILE2 *);
