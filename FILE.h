@@ -26,9 +26,22 @@ enum flags {
 	EOF2 = 8		//End of file has reached on file
 };
 
+/* In the GNU C Library, fpos_t is an opaque data structure that contains internal data to represent file offset and conversion state 
+ * information.
+ * It may encode both a record offset within the file, and a character offset.
+ * I am implementing a simple version of it.*/
+
+typedef struct fpos_t2 {
+	long int position;
+}fpos_t2;
+
 int i = 0;			//Variable that stores no. of simultaneously opened files
 int fclose2(FILE2 *);
 FILE2 *fopen2(const char *filename, const char *mode);
 int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *stream);	
 int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *stream);
-long int ftell(FILE2 *);
+long int ftell2(FILE2 *stream);
+int fseek2(FILE2 *stream, long int offset, int whence);
+int feof2(FILE2 *stream);
+int fsetpos2(FILE2 *stream, const fpos_t2 *pos);
+int fgetpos2(FILE2 *stream, fpos_t2 *pos);

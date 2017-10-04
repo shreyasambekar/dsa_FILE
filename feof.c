@@ -9,9 +9,9 @@
  * This function returns a non-zero value when End-of-File indicator associated with the stream is set
  *, else zero is returned. */
 
-int feof(FILE2 *fp) {
+int feof2(FILE2 *fp) {
 	if(fp->fd < 0 || fp->fd > 13) }{
-		write(1, "Not a standard file descriptor\n", 31);
+		write(1, "Not a valid file descriptor\n", 28);
 		return 0;
 	}
 	if(fp->flag == EOF2) {

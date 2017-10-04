@@ -13,7 +13,7 @@
 int fclose2(FILE2 * fp) {
 	int ret;
 	if(fp->fd > 13 || fp->fd < 0) {
-		write(1, "Not a standard file descriptor\n", 31);
+		write(1, "Not a valid file descriptor\n", 28);
 		return -1;
 	}
 	if(fp->wcnt != 0) {

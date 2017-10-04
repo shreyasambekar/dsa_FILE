@@ -8,9 +8,9 @@
  * This function returns the current value of the position indicator. 
  * If an error occurs, -1L is returned. */
 
-long int ftell(FILE2 *fp) {
+long int ftell2(FILE2 *fp) {
 	if(fp->fd > 13 || fp->fd < 0) {		//Not a standard file descriptor
-		write(1, "Not a standard file descriptor\n", 31);
+		write(1, "Not a valid file descriptor\n", 28);
 		return -1L;
 	}
 	return fp->pos;
