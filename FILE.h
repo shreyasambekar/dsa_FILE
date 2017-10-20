@@ -2,6 +2,9 @@
 #include <stddef.h>
 #define BUFSIZE 1024
 #define MAX 10
+#define SEEK_SET2 100
+#define SEEK_CUR2 200
+#define SEEK_END2 300
 
 typedef struct file {
 	int rcnt;		//Characters left to read from buffer
@@ -11,6 +14,7 @@ typedef struct file {
 	char *rbuf;		//Location of buffer for reading
 	char *wbuf;		//Location of buffer for writing
 	int flag;		//Mode of file access
+	int flagbackup;		//To get the flag when EOF of file is removed
 	int fd;			//File descriptor
 	long int fpos;		//Current file position
 }FILE2;

@@ -12,10 +12,10 @@
  * then either an error had occurred or the End Of File was reached.
  * ferror() and feof() must be used to distinguish between error and EOF condition.*/
 
-int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
-	long int bytes = size * nmemb, j, count = 0;
-	char *cp = (char *) ptr;
-	if(fp->fd > 13 || fp->fd < 0) {
+int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {		//Yet to handle the case of alternate read write calls
+	long int bytes = size * nmemb, j, count = 0;			//For this, maintain a static variable
+	char *cp = (char *) ptr;					//If it changed, do the changes
+	if(fp->fd > 13 || fp->fd < 0) {					//Same changes in fwrite
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);
 		return 0;
 	}
@@ -24,6 +24,7 @@ int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			fp->rcnt = read(fp->fd, fp->rbuf, BUFSIZE);
 			fp->rptr = fp->rbuf;
 			if(fp->rcnt < BUFSIZE) {
+				fp->flagbackup = fp->flag;
 				fp->flag = EOF2;
 			}
 		}
@@ -46,5 +47,5 @@ int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 		}
 	}
 	fp->pos = fp->pos + count;
-	return (count/size);
+	return (count / size);
 }
