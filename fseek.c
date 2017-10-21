@@ -10,7 +10,7 @@
  * sets the file position of the stream to the given offset.
  * This function returns zero if successful, or else it returns a non-zero value.*/
 
-int fseek2(FILE2 *stream, long int offset, int whence) {
+int fseek2(FILE2 *fp, long int offset, int whence) {
 	int lret;
 	if(fp->fd > 13 || fp->fd < 0) {
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);

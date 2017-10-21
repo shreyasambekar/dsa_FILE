@@ -12,6 +12,6 @@ int fgetpos2(FILE2 *fp, fpos_t2 *pos) {
 		write(1, "Not a valid file decriptor\n", 28);
 		return 1;
 	}
-	pos->position = fp->position;		//Copies position in fpos_t structure member which can be later used by fsetpos
+	pos->position = fp->pos;		//Copies position in fpos_t structure member which can be later used by fsetpos
 	return 0;
 }

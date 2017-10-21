@@ -4,7 +4,7 @@
 #define MAX 10
 #define SEEK_SET2 100
 #define SEEK_CUR2 200
-#define SEEK_END2 300
+#define SEEK_END2 300		//Arguments of fseek
 
 typedef struct file {
 	int rcnt;		//Characters left to read from buffer
@@ -35,7 +35,7 @@ enum flags {
  * It may encode both a record offset within the file, and a character offset.
  * I am implementing a simple version of it.*/
 
-typedef struct fpos_t2 {
+typedef struct fpos_t2 {	//The structure used by fsetpos and fgetpos functions
 	long int position;
 }fpos_t2;
 

@@ -6,73 +6,33 @@
 #include <unistd.h>
 #include <string.h>
 
-/* The C library function int fseek(FILE *stream, long int offset, int whence) 
- * sets the file position of the stream to the given offset.
- * This function returns zero if successful, or else it returns a non-zero value.*/
+/* The fsetpos() function shall set the file position and state indicators for 
+ * the stream pointed to by stream according to the value of the object pointed to by pos,
+ * which the application shall ensure is a value obtained from an earlier call to fgetpos() on the same stream.
+ * The fsetpos() function shall return 0 if it succeeds; otherwise, it shall return a non-zero value and set errno to indicate the error.
+ */
 
-int fseek2(FILE2 *stream, long int offset, int whence) {
+int fsetpos2(FILE2 *fp, const fpos_t2 *pos) {
 	int lret;
 	if(fp->fd > 13 || fp->fd < 0) {
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);
 		return 0;
 	}
-	if(whence != SEEK_CUR2) {	
-		free(fp->rbuf);	
-		fp->rbuf = (char *)malloc(BUFSIZE);
-		fp->rptr = fp->rbuf;	
-		if(fp->wcnt != 0) {
-			write(fp->fd, fp->wbuf, fp->wcnt);
-		}
-		free(fp->wbuf);
-		fp->wbuf = (char *)malloc(BUFSIZE);
-		fp->wptr = fp->wbuf;
-		fp->wcnt = 0;
-		fp->rcnt = 0;
+	if(fp->wcnt != 0) {
+		write(fp->fd, fp->wbuf, fp->wcnt);
 	}
-	else {
-		if(fp>wcnt != 0) {
-			write(fp->fd, fp->wbuf, fp->wcnt);
-			free(fp->wbuf);
-			fp->wbuf = (char *)malloc(BUFSIZE);
-			fp->wptr = fp->wbuf;
-			fp->wcnt = 0;
-		}
-		if(offset < 0) {	
-			if((-1) * offset < BUFSIZE - fp->rcnt) {
-				fp->pos = fp->pos + offset;
-				fp->rptr = fp->rptr + offset;
-				fp->rcnt = fp->rcnt - offset;
-				return 0;
-			}
-			else if((-1) * offset > BUFSIZE - fp->rcnt) {
-				lret = lseek(fp->fd, -(fp->rptr - fp->rbuf + fp->rcnt), SEEK_CUR);
-				if(lret == -1) {
-					return -1;
-				}
-				offset = offset + fp->rptr - fp->rbuf + fp->rcnt;	
-				free(fp->rbuf);
-				fp->rbuf = (char *)malloc(BUFSIZE);
-				fp->rptr = fp->rbuf;
-				fp->rcnt = 0;	
-			}
-		}		
-		else if(offset > 0) {
-			if(fp->rcnt > offset) {
-				fp->pos = fp->pos + offset;
-				fp->rptr = fp->rptr + offset;
-				fp->rcnt = fp->rcnt - offset;
-				return 0;
-			}
-			else if(offset > fp->rcnt) {
-				offset = offset - fp->rcnt;
-				free(fp->rbuf);
-				fp->rbuf = (char *)malloc(BUFSIZE);
-				fp->rptr = fp->rbuf;
-				fp->rcnt = 0;	
-			}
-		}
+	free(fp->wbuf);
+	free(fp->rbuf);
+	fp->wbuf = (char *)malloc(sizeof(BUFSIZE));
+	fp->rbuf = (char *)malloc(sizeof(BUFSIZE));
+	fp->rptr = fp->rbuf;
+	fp->wptr = fp->wbuf;
+	fp->rcnt = fp->wcnt = 0;
+	if(fp->flag == EOF2) {
+		fp->flag = fp->flagbackup;
 	}
-	lret = lseek(fp->fd, offset, SEEK_CUR);
+	lret = lseek(fp->fd, pos->position, SEEK_SET);
+	fp->pos = pos->position;
 	if(lret == -1) {
 		return -1;
 	}
