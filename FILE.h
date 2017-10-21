@@ -39,7 +39,6 @@ typedef struct fpos_t2 {
 	long int position;
 }fpos_t2;
 
-int i = 0;			//Variable that stores no. of simultaneously opened files
 int fclose2(FILE2 *);
 FILE2 *fopen2(const char *filename, const char *mode);
 int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *stream);	

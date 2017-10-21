@@ -28,6 +28,5 @@ int fclose2(FILE2 * fp) {
 	if(ret == -1) {
 		return -1;
 	}
-	i--;				//The no. of files opened in program is now less
 	return 0;
 }

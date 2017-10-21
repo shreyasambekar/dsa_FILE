@@ -13,10 +13,12 @@
 FILE2 *fopen2(const char *filename, const char *mode) {
 	FILE2 *fp;
 	int fd;
+	static int max = 0;
 	struct stat st;						//Structure to get the length of file
-	if(i == MAX) {						//Maximum possible no. of files are opened in the program
+	if(max == 1) {						//Maximum possible no. of files are opened in the program
 		return NULL;
 	}
+	fp = (FILE2 *)malloc(sizeof(FILE2));
 	if(strcmp(mode, "r") == 0) {
 		fd = open(filename, O_RDONLY);
 		fp->flag = RBUF;
@@ -72,6 +74,9 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 	else {
 		return NULL;
 	}
+	if(fd > 13) {
+		max = 1;			//Maximum files opened
+	}
 	fp->fd = fd;
 	fp->rcnt = 0;	
 	fp->wcnt = 0;
@@ -79,6 +84,5 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 	fp->wbuf = (char *) malloc(BUFSIZE);	
 	fp->rptr = fp->rbuf;
 	fp->wptr = fp->wbuf;
-	i++;					//Increases the counter that keeps record of no. of opened files
 	return fp;
 }
