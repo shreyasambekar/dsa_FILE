@@ -19,6 +19,13 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 		write(1, "Not a valid file descriptor, write operation failed\n", 52);
 		return 0;
 	}
+	if(fp->rcnt != 0) {				//If call to fread is made before, to write the remaining data in buffer
+		lseek(fp->fd, -(fp->rcnt), SEEK_CUR);	//Handle the case if lseek fails later
+		free(fp->rbuf);
+		fp->rbuf = (char *)malloc(BUFSIZE);
+		fp->rptr = fp->wbuf;
+		fp->rcnt = 0;
+	}
 	while(1) {
 		for(j = 0; j < bytes; j++) {				//Addition of 1 may be necessary to loop conditions
 			*(fp->wptr++) = *(cp++);
