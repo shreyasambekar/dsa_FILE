@@ -1,3 +1,4 @@
+/*Why is one extra byte written*/
 #include "FILE.h"
 #include <stdlib.h>
 #include <stddef.h>
@@ -48,7 +49,7 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 		}
 		count = count + written;
 		if(fp->wcnt == 0) {
-			bytes = bytes - /*BUFSIZE*/j;/*Think of j here*/
+			bytes = bytes - /*BUFSIZE*/j - 1;/*Think of j here -1 done recently*/
 			fp->wptr = fp->wbuf;		/*This extra line is added today*/
 		}
 		else {

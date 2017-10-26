@@ -28,9 +28,23 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 		fp->wptr = fp->wbuf;
 		fp->wcnt = 0;
 		fp->rcnt = 0;
+		if(whence == SEEK_SET2) {
+			lret = lseek(fp->fd, offset, SEEK_SET);
+			if(lret == -1) {
+				return -1;
+			}
+			return 0;
+		}
+		else {
+			lret = lseek(fp->fd, offset, SEEK_END);
+			if(lret == -1) {
+				return -1;
+			}
+			return 0;
+		}
 	}
 	else {
-		if(fp>wcnt != 0) {
+		if(fp->wcnt != 0) {
 			write(fp->fd, fp->wbuf, fp->wcnt);
 			free(fp->wbuf);
 			fp->wbuf = (char *)malloc(BUFSIZE);
