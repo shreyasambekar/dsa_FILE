@@ -34,7 +34,8 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 				written = write(fp->fd, fp->wbuf, BUFSIZE);	//Writes to the file if the buffer is full
 				if(written != BUFSIZE) {
 					fp->wcnt = fp->wcnt - written;
-					count = count + written;	
+					fp->wptr = fp->wbuf + fp->wcnt; /*This line is added*/
+					count = count + /*written*/j;	/*Here should be j I think*/
 					fp->pos = fp->pos + count;		//Add 1 if necessary later
 					return (count / size);
 				}
@@ -43,14 +44,15 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			}
 		}
 		if(fp->wcnt != 0) {
-			written = fp->wcnt;
+			written = /*fp->wcnt*/j;	/*Here too it should be j I think*/
 		}
 		count = count + written;
 		if(fp->wcnt == 0) {
-			bytes = bytes - BUFSIZE;
+			bytes = bytes - /*BUFSIZE*/j;/*Think of j here*/
+			fp->wptr = fp->wbuf;		/*This extra line is added today*/
 		}
 		else {
-			bytes = bytes - fp->wcnt;
+			bytes = bytes - /*fp->wcnt*/j; /*Think of j here too*/
 		}
 		if(bytes == 0) {
 			break;

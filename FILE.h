@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stddef.h>
-#define BUFSIZE 1024
+#define BUFSIZE 24		/*BUFSIZE CHANED,  DO IT 1024 LATET*/
 #define MAX 10
 #define SEEK_SET2 100
 #define SEEK_CUR2 200
@@ -16,7 +16,7 @@ typedef struct file {
 	int flag;		//Mode of file access
 	int flagbackup;		//To get the flag when EOF of file is removed
 	int fd;			//File descriptor
-	long int fpos;		//Current file position
+	long int pos;		//Current file position
 }FILE2;
 
 enum flags {	
