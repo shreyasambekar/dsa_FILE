@@ -46,7 +46,7 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		lseek(fd, 0, SEEK_END);		//Set the file position to the end
 	}
 	else if(strcmp(mode, "r+") == 0) {
-		fd = open(filename, O_RDONLY | O_WRONLY);
+		fd = open(filename, O_RDWR);
 		fp->flag = RWRBUF;
 		fp->pos = 0;
 		if(fd == -1) {
@@ -62,7 +62,7 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		}
 	}
 	else if(strcmp(mode, "a+") == 0) {
-		fd = open(filename, O_RDONLY | O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+		fd = open(filename, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
 		fp->flag = RAPPBUF;
 		if(fd == -1) {
 			return NULL;
