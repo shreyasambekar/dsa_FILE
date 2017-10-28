@@ -1,4 +1,4 @@
-/*Why is one extra byte written*/
+#include <stdio.h>		//remove this line too
 #include "FILE.h"
 #include <stdlib.h>
 #include <stddef.h>
@@ -33,6 +33,7 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			fp->wcnt++;
 			if(fp->wcnt == BUFSIZE) {
 				written = write(fp->fd, fp->wbuf, BUFSIZE);	//Writes to the file if the buffer is full
+			//	printf("\nwrittn: %ld\n", written);				//Remove this line later
 				if(written != BUFSIZE) {
 					fp->wcnt = fp->wcnt - written;
 					fp->wptr = fp->wbuf + fp->wcnt; /*This line is added*/

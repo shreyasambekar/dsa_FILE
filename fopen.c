@@ -54,7 +54,7 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		}
 	}
 	else if(strcmp(mode, "w+") == 0) {
-		fd = open(filename, O_RDONLY | O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
+		fd = open(filename, O_RDWR | O_TRUNC | O_CREAT, S_IRUSR | S_IWUSR);
 		fp->flag = WRRBUF;
 		fp->pos = 0;
 		if(fd == -1) {
