@@ -1,4 +1,3 @@
-#include <stdio.h>		//remove this line too
 #include "FILE.h"
 #include <stdlib.h>
 #include <stddef.h>

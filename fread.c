@@ -1,4 +1,3 @@
-#include <stdio.h>		//remove it later
 #include <errno.h>
 #include <sys/stat.h>
 #include <stdlib.h>
