@@ -11,7 +11,7 @@
  * This function returns zero if successful, or else it returns a non-zero value.*/
 
 int fseek2(FILE2 *fp, long int offset, int whence) {
-	int lret;
+	int lret, ret;
 	if(fp->fd > 13 || fp->fd < 0) {
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);
 		return 0;
@@ -24,7 +24,10 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 		fp->rbuf = (char *)malloc(BUFSIZE);
 		fp->rptr = fp->rbuf;	
 		if(fp->wcnt != 0) {
-			write(fp->fd, fp->wbuf, fp->wcnt);
+			ret = write(fp->fd, fp->wbuf, fp->wcnt);
+			if(ret == -1) {
+				return -1;
+			}
 		}
 		free(fp->wbuf);
 		fp->wbuf = (char *)malloc(BUFSIZE);
@@ -50,7 +53,10 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 	}
 	else {
 		if(fp->wcnt != 0) {
-			write(fp->fd, fp->wbuf, fp->wcnt);
+			ret = write(fp->fd, fp->wbuf, fp->wcnt);
+			if(ret == -1) {
+				return -1;
+			}
 			free(fp->wbuf);
 			fp->wbuf = (char *)malloc(BUFSIZE);
 			fp->wptr = fp->wbuf;

@@ -12,7 +12,7 @@
  * If this number differs from the nmemb parameter, it will show an error.*/
 
 int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
-	long int bytes, j, count = 0, written;
+	long int bytes, j, count = 0, written, ret;
 	bytes = size * nmemb;
 	char *cp = (char *) ptr;
 	if(fp->fd > 13 || fp->fd < 0) {
@@ -20,7 +20,10 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 		return 0;
 	}
 	if(fp->rcnt != 0) {				//If call to fread is made before, to write the remaining data in buffer
-		lseek(fp->fd, -(fp->rcnt), SEEK_CUR);	//Handle the case if lseek fails later
+		ret = lseek(fp->fd, -(fp->rcnt), SEEK_CUR);	
+		if(ret == -1) {
+			return 0;
+		}
 		free(fp->rbuf);
 		fp->rbuf = (char *)malloc(BUFSIZE);
 		fp->rptr = fp->wbuf;
@@ -32,6 +35,9 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			fp->wcnt++;
 			if(fp->wcnt == BUFSIZE) {
 				written = write(fp->fd, fp->wbuf, BUFSIZE);	//Writes to the file if the buffer is full
+				if(written == -1) {
+					return 0;
+				}
 				if(written != BUFSIZE) {
 					fp->wcnt = fp->wcnt - written;
 					fp->wptr = fp->wbuf + fp->wcnt; 

@@ -14,14 +14,17 @@
  * ferror() and feof() must be used to distinguish between error and EOF condition.*/
 
 int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {	
-	long int bytes = size * nmemb, j = 0, count = 0, i;		
+	long int bytes = size * nmemb, j = 0, count = 0, i, ret;		
 	char *cp = (char *) ptr;				
 	if(fp->fd > 13 || fp->fd < 0) {				
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);
 		return 0;
 	}
 	if(fp->wcnt != 0) {				//If call to fwrite is made before, to write the remaining data in buffer
-		write(fp->fd, fp->wbuf, fp->wcnt);	//Handle the case if no. of bytes actually written is less later
+		ret = write(fp->fd, fp->wbuf, fp->wcnt);	
+		if(ret == -1) {
+			return 0;
+		}
 		free(fp->wbuf);
 		fp->wbuf = (char *)malloc(BUFSIZE);
 		fp->wptr = fp->wbuf;
@@ -30,6 +33,9 @@ int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 	while(1) {
 		if(fp->rcnt == 0) {
 			fp->rcnt = read(fp->fd, fp->rbuf, BUFSIZE);
+			if(fp->rcnt == -1) {
+				return 0;
+			}
 			fp->rptr = fp->rbuf;
 			if(fp->rcnt < BUFSIZE) {
 				fp->flagbackup = fp->flag;

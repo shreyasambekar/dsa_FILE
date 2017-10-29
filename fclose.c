@@ -17,7 +17,10 @@ int fclose2(FILE2 * fp) {
 		return -1;
 	}
 	if(fp->wcnt != 0) {
-		write(fp->fd, fp->wbuf, fp->wcnt);	//Flushes the buffer
+		ret = write(fp->fd, fp->wbuf, fp->wcnt);	//Flushes the buffer
+	}
+	if(ret == -1) {
+		return -1;
 	}
 	free(fp->wbuf);			//Frees the memory allocatef for write buffer
 	free(fp->rbuf);			//Frees the memory allocated for read buffer

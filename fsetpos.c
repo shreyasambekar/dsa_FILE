@@ -13,13 +13,16 @@
  */
 
 int fsetpos2(FILE2 *fp, const fpos_t2 *pos) {
-	int lret;
+	int lret, ret;
 	if(fp->fd > 13 || fp->fd < 0) {
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);
 		return 0;
 	}
 	if(fp->wcnt != 0) {
-		write(fp->fd, fp->wbuf, fp->wcnt);
+		ret = write(fp->fd, fp->wbuf, fp->wcnt);
+	}
+	if(ret == -1) {
+		return -1;
 	}
 	free(fp->wbuf);
 	free(fp->rbuf);
