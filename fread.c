@@ -1,4 +1,3 @@
-#include <stdio.h>		//Remove this line later
 #include <errno.h>
 #include <sys/stat.h>
 #include <stdlib.h>
@@ -34,32 +33,28 @@ int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			fp->rptr = fp->rbuf;
 			if(fp->rcnt < BUFSIZE) {
 				fp->flagbackup = fp->flag;
-				printf("hii\n");		//remove this line later
 				fp->flag = EOF2;
 			}
 		}
 		if(fp->rcnt >= bytes) {
-			for(j = 0; j < bytes; j++) {		//Addition of 1 may be necessary to loop conditions
+			for(j = 0; j < bytes; j++) {		
 				*(cp++) = *(fp->rptr++);
 				count++;
 				fp->rcnt--;
 			}
 			break;
 		}
-		printf("count: %ld\t%d\n", count, fp->rcnt);			//remove this line later
 		i = fp->rcnt;
 		for(j = 0; j < i; j++) {
 			*(cp++) = *(fp->rptr++);
-			count++;			//Not sure with precedence, check it later
+			count++;			
 			fp->rcnt--;
 		}
 		bytes = bytes - j;
 		if(fp->flag == EOF2) {
-			printf("yup\n");		//remove
 			break;
 		}
 	}
-	printf("%ld\n", count);				//remove this lin too
 	fp->pos = fp->pos + count;
 	return (count / size);
 }

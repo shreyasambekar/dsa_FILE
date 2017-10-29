@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stddef.h>
-#define BUFSIZE 24		/*BUFSIZE CHANED,  DO IT 1024 LATET*/
+#define BUFSIZE 1024		
 #define MAX 10
 #define SEEK_SET2 100
 #define SEEK_CUR2 200

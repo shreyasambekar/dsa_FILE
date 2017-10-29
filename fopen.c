@@ -68,7 +68,7 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		if(fd == -1) {
 			return NULL;
 		}
-		fp->pos = st.st_size;		//Addition by 1 may be necessary
+		fp->pos = st.st_size;		
    		lseek(fd, 0, SEEK_END);		//Set the file position to the end
 	}
 	else {

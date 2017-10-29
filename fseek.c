@@ -57,19 +57,19 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 			fp->wcnt = 0;
 		}
 		if(offset < 0) {	
-			if((-1) * offset < /*BUFSIZE - fp->rcnt*/fp->rptr - fp->rbuf) {		//check
+			if((-1) * offset < fp->rptr - fp->rbuf) {		
 				fp->pos = fp->pos + offset;
 				fp->rptr = fp->rptr + offset;
 				fp->rcnt = fp->rcnt - offset;
 				return 0;
 			}
-			else if((-1) * offset >= /*BUFSIZE - fp->rcnt*/fp->rptr - fp->rbuf) {	//check
-				lret = lseek(fp->fd, -(fp->rptr - fp->rbuf + fp->rcnt/*BUFSIZE*/), SEEK_CUR);
+			else if((-1) * offset >= fp->rptr - fp->rbuf) {	
+				lret = lseek(fp->fd, -(fp->rptr - fp->rbuf + fp->rcnt), SEEK_CUR);
 				if(lret == -1) {
 					return -1;
 				}
 				fp->pos = fp->pos + offset;
-				offset = offset + fp->rptr - fp->rbuf/* + fp->rcnt*/;	//see if it works	
+				offset = offset + fp->rptr - fp->rbuf;
 				free(fp->rbuf);
 				fp->rbuf = (char *)malloc(BUFSIZE);
 				fp->rptr = fp->rbuf;

@@ -1,4 +1,3 @@
-#include <stdio.h>			//remove this line later
 #include "FILE.h"
 #include <stdlib.h>
 #include <stddef.h>
@@ -28,17 +27,16 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 		fp->rcnt = 0;
 	}
 	while(1) {
-		for(j = 0; j < bytes; j++) {				//Addition of 1 may be necessary to loop conditions
+		for(j = 0; j < bytes; j++) {		
 			*(fp->wptr++) = *(cp++);
 			fp->wcnt++;
 			if(fp->wcnt == BUFSIZE) {
 				written = write(fp->fd, fp->wbuf, BUFSIZE);	//Writes to the file if the buffer is full
-			//	printf("\nwrittn: %ld\n", written);				//Remove this line later
 				if(written != BUFSIZE) {
 					fp->wcnt = fp->wcnt - written;
-					fp->wptr = fp->wbuf + fp->wcnt; /*This line is added*/
-					count = count + written/*j*/;	/*Here should be written I think*/
-					fp->pos = fp->pos + count;		//Add 1 if necessary later
+					fp->wptr = fp->wbuf + fp->wcnt; 
+					count = count + written;	
+					fp->pos = fp->pos + count;		
 					return (count / size);
 				}
 				fp->wcnt = 0;	
@@ -46,21 +44,20 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			}
 		}
 		if(fp->wcnt != 0) {
-			written = /*fp->wcnt*/j;	/*Here too it should be j I think*/
+			written = j;	
 		}
 		count = count + written;
 		if(fp->wcnt == 0) {
-			bytes = bytes - /*BUFSIZE*/j - 1;/*Think of j here -1 done recently*/
-			fp->wptr = fp->wbuf;		/*This extra line is added today*/
+			bytes = bytes - j - 1;
+			fp->wptr = fp->wbuf;
 		}
 		else {
-			bytes = bytes - /*fp->wcnt*/j; /*Think of j here too*/
+			bytes = bytes - j;
 		}
 		if(bytes == 0) {
 			break;
 		}
 	}	
-	printf("count: %ld\n", count);		//remove this line later
 	fp->pos = fp->pos + count;	
 	return (count / size);
 }
