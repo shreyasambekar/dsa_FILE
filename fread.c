@@ -1,3 +1,4 @@
+#include <stdio.h>		//Remove this line later
 #include <errno.h>
 #include <sys/stat.h>
 #include <stdlib.h>
@@ -14,7 +15,7 @@
  * ferror() and feof() must be used to distinguish between error and EOF condition.*/
 
 int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {	
-	long int bytes = size * nmemb, j = 0, count = 0;		
+	long int bytes = size * nmemb, j = 0, count = 0, i;		
 	char *cp = (char *) ptr;				
 	if(fp->fd > 13 || fp->fd < 0) {				
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);
@@ -33,6 +34,7 @@ int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			fp->rptr = fp->rbuf;
 			if(fp->rcnt < BUFSIZE) {
 				fp->flagbackup = fp->flag;
+				printf("hii\n");		//remove this line later
 				fp->flag = EOF2;
 			}
 		}
@@ -44,16 +46,20 @@ int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			}
 			break;
 		}
-		for(j = 0; j < fp->rcnt; j++) {
+		printf("count: %ld\t%d\n", count, fp->rcnt);			//remove this line later
+		i = fp->rcnt;
+		for(j = 0; j < i; j++) {
 			*(cp++) = *(fp->rptr++);
 			count++;			//Not sure with precedence, check it later
 			fp->rcnt--;
 		}
 		bytes = bytes - j;
 		if(fp->flag == EOF2) {
+			printf("yup\n");		//remove
 			break;
 		}
 	}
+	printf("%ld\n", count);				//remove this lin too
 	fp->pos = fp->pos + count;
 	return (count / size);
 }

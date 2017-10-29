@@ -41,7 +41,7 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 		if(fd == -1) {
 			return NULL;
 		}
-   		stat(filename, &st);
+   		stat(filename, &(st));
 		fp->pos = st.st_size;		//Addition by 1 may be necessary
 		lseek(fd, 0, SEEK_END);		//Set the file position to the end
 	}
@@ -64,10 +64,10 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 	else if(strcmp(mode, "a+") == 0) {
 		fd = open(filename, O_RDWR | O_CREAT, S_IRUSR | S_IWUSR);
 		fp->flag = RAPPBUF;
+   		stat(filename, &(st));
 		if(fd == -1) {
 			return NULL;
 		}
-   		stat(filename, &st);
 		fp->pos = st.st_size;		//Addition by 1 may be necessary
    		lseek(fd, 0, SEEK_END);		//Set the file position to the end
 	}

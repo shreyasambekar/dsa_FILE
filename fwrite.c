@@ -1,3 +1,4 @@
+#include <stdio.h>			//remove this line later
 #include "FILE.h"
 #include <stdlib.h>
 #include <stddef.h>
@@ -36,7 +37,7 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 				if(written != BUFSIZE) {
 					fp->wcnt = fp->wcnt - written;
 					fp->wptr = fp->wbuf + fp->wcnt; /*This line is added*/
-					count = count + /*written*/j;	/*Here should be j I think*/
+					count = count + written/*j*/;	/*Here should be written I think*/
 					fp->pos = fp->pos + count;		//Add 1 if necessary later
 					return (count / size);
 				}
@@ -59,6 +60,7 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			break;
 		}
 	}	
+	printf("count: %ld\n", count);		//remove this line later
 	fp->pos = fp->pos + count;	
 	return (count / size);
 }

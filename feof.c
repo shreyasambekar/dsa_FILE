@@ -10,12 +10,12 @@
  *, else zero is returned. */
 
 int feof2(FILE2 *fp) {
-	if(fp->fd < 0 || fp->fd > 13) }{
+	if(fp->fd < 0 || fp->fd > 13) {
 		write(1, "Not a valid file descriptor\n", 28);
 		return 0;
 	}
 	if(fp->flag == EOF2) {
 		return 1;
 	}
-	return ;
+	return 0;
 }

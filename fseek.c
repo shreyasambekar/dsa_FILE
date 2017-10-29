@@ -16,6 +16,9 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 		write(1, "Not a valid file descriptor, read operation failed\n", 51);
 		return 0;
 	}
+	if(fp->flag == EOF2) {
+		fp->flag = fp->flagbackup;
+	}
 	if(whence != SEEK_CUR2) {	
 		free(fp->rbuf);	
 		fp->rbuf = (char *)malloc(BUFSIZE);
@@ -33,6 +36,7 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 			if(lret == -1) {
 				return -1;
 			}
+			fp->pos = lret;
 			return 0;
 		}
 		else {
@@ -40,6 +44,7 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 			if(lret == -1) {
 				return -1;
 			}
+			fp->pos = lret;
 			return 0;
 		}
 	}
@@ -63,6 +68,7 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 				if(lret == -1) {
 					return -1;
 				}
+				fp->pos = fp->pos + offset;
 				offset = offset + fp->rptr - fp->rbuf/* + fp->rcnt*/;	//see if it works	
 				free(fp->rbuf);
 				fp->rbuf = (char *)malloc(BUFSIZE);
@@ -78,6 +84,7 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 				return 0;
 			}
 			else if(offset > fp->rcnt) {
+				fp->pos = fp->pos + offset;
 				offset = offset - fp->rcnt;
 				free(fp->rbuf);
 				fp->rbuf = (char *)malloc(BUFSIZE);
