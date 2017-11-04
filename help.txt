@@ -1,0 +1,11 @@
+References:
+1) The C Programming Language - by KnR
+	-For understanding of buffered i/o and solving other general doubts
+2) http://pubs.opengroup.org/
+	-To read man pages elaborately, to get detail information of system calls related errors and how to fix them
+3) http://tutorialspoint.com/
+	-To read short description of library functions, referring to syntax, understanding of functions through examples
+4) https://unix.stackexchange.com/
+	-To know some commands useful for my project and solve general linux related doubts
+5) https://stackoverflow.com/
+	-To solve general doubts
