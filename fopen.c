@@ -14,8 +14,8 @@ FILE2 *fopen2(const char *filename, const char *mode) {
 	FILE2 *fp;
 	int fd;
 	static int max = 0;
-	struct stat st;						//Structure to get the length of file
-	if(max == 1) {						//Maximum possible no. of files are opened in the program
+	struct stat st;				//Structure to get the length of file
+	if(max == 1) {				//Maximum possible no. of files are opened in the program
 		return NULL;
 	}
 	fp = (FILE2 *)malloc(sizeof(FILE2));

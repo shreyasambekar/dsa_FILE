@@ -22,8 +22,8 @@ int fclose2(FILE2 * fp) {
 	if(ret == -1) {
 		return -1;
 	}
-	free(fp->wbuf);			//Frees the memory allocatef for write buffer
-	free(fp->rbuf);			//Frees the memory allocated for read buffer
+	free(fp->wbuf);						//Frees the memory allocatef for write buffer
+	free(fp->rbuf);						//Frees the memory allocated for read buffer
 	ret = close(fp->fd);
 	free(fp);
 	if(ret == -1) {

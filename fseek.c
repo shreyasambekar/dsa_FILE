@@ -63,7 +63,7 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 			fp->wcnt = 0;
 		}
 		if(offset < 0) {	
-			if((-1) * offset < fp->rptr - fp->rbuf) {		//Only changing the buffer index
+			if((-1) * offset < fp->rptr - fp->rbuf) {	//Only changing the buffer index
 				fp->pos = fp->pos + offset;
 				fp->rptr = fp->rptr + offset;
 				fp->rcnt = fp->rcnt - offset;
