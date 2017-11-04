@@ -63,7 +63,7 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 			fp->wcnt = 0;
 		}
 		if(offset < 0) {	
-			if((-1) * offset < fp->rptr - fp->rbuf) {		
+			if((-1) * offset < fp->rptr - fp->rbuf) {		//Only changing the buffer index
 				fp->pos = fp->pos + offset;
 				fp->rptr = fp->rptr + offset;
 				fp->rcnt = fp->rcnt - offset;
@@ -99,7 +99,7 @@ int fseek2(FILE2 *fp, long int offset, int whence) {
 			}
 		}
 	}
-	lret = lseek(fp->fd, offset, SEEK_CUR);
+	lret = lseek(fp->fd, offset, SEEK_CUR);			//Actually doing lseek if the no. of elements left in buffer is less
 	if(lret == -1) {
 		return -1;
 	}

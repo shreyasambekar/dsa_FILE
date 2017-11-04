@@ -61,6 +61,6 @@ int fread2(void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			break;
 		}
 	}
-	fp->pos = fp->pos + count;
-	return (count / size);
+	fp->pos = fp->pos + count;			//To advance the file position
+	return (count / size);				//Returns the no. of elements read
 }

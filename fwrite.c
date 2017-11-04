@@ -64,6 +64,6 @@ int fwrite2(const void *ptr, size_t size, size_t nmemb, FILE2 *fp) {
 			break;
 		}
 	}	
-	fp->pos = fp->pos + count;	
-	return (count / size);
+	fp->pos = fp->pos + count;			//Advances the file position
+	return (count / size);				//Returns the no. of elements written
 }
