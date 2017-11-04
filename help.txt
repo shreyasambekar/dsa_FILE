@@ -8,4 +8,4 @@ References:
 4) https://unix.stackexchange.com/
 	-To know some commands useful for my project and solve general linux related doubts
 5) https://stackoverflow.com/
-	-To solve general doubts
+	-To solve linking doubts and other general errors

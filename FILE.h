@@ -48,3 +48,4 @@ int fseek2(FILE2 *stream, long int offset, int whence);
 int feof2(FILE2 *stream);
 int fsetpos2(FILE2 *stream, const fpos_t2 *pos);
 int fgetpos2(FILE2 *stream, fpos_t2 *pos);
+int fflush2(FILE2 *stream);	
