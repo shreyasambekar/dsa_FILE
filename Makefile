@@ -1,6 +1,6 @@
-test: main.o project
-	cc main.o project -o test
+project: main.o project.o
+	cc main.o project.o -o project
 main.o: FILE.h main.c
 	cc -c main.c
-project: FILE.h project.c
-	cc -c project.c -o project
+project.o: FILE.h project.c
+	cc -c project.c
